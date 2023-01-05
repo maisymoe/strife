@@ -1,1 +1,1 @@
-(function(o,n){"use strict";function l(){n.logger.log("Hello world!")}function d(){n.logger.log("Goodbye, world.")}return o.onLoad=l,o.onUnload=d,o})({},vendetta);
+(function(e){"use strict";const t=vendetta.metro.common.ReactNative;var o=()=>React.createElement(React.Fragment,null,React.createElement(t.Text,null,"Hello, world!"));const{logger:n}=vendetta;function l(){n.log("Hello world!")}function a(){n.log("Goodbye, world.")}return e.onLoad=l,e.onUnload=a,e.settings=o,e})({});
