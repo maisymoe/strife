@@ -1,14 +1,14 @@
 {
-    "name": "Template Plugin",
-    "description": "A plugin for use as a template.",
+    "name": "Test Plugin",
+    "description": "A plugin for use in testing.",
     "authors": [
         {
-            "name": "You!",
-            "id": "YOUR_ID_HERE"
+            "name": "Beef",
+            "id": "257109471589957632"
         }
     ],
     "main": "src/index.js",
     "vendetta": {
-        "icon": "ic_mail"
+        "icon": "ic_badge_staff"
     }
 }

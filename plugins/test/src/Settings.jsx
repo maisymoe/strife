@@ -1,9 +1,9 @@
-const RN = vendetta.metro.common.ReactNative;
+const { FormText } = vendetta.ui.components.Forms;
 
 export default () => (
     <>
-        <RN.Text>
+        <FormText>
             Hello, world!
-        </RN.Text>
+        </FormText>
     </>
 )
