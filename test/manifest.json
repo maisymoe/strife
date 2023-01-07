@@ -1,1 +1,1 @@
-{"name":"Template Plugin","description":"A plugin for use as a template.","authors":[{"name":"You!","id":"YOUR_ID_HERE"}],"main":"index.js","vendetta":{"icon":"ic_mail"},"hash":"5e45fc1e3332e24e62b5533290eb574cef5b380076dac22fc84823dceece0e0f"}
+{"name":"Test Plugin","description":"A plugin for use in testing.","authors":[{"name":"Beef","id":"257109471589957632"}],"main":"index.js","vendetta":{"icon":"ic_badge_staff"},"hash":"07e18dfaaafa4e104015d0738e6ce0a57987dc0c164ba2d9e34c4e702a09957c"}
