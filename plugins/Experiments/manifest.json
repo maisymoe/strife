@@ -1,0 +1,14 @@
+{
+    "name": "Experiments",
+    "description": "Enable Discord's developer features.",
+    "authors": [
+        {
+            "name": "Beef",
+            "id": "257109471589957632"
+        }
+    ],
+    "main": "src/index.js",
+    "vendetta": {
+        "icon": "ic_badge_staff"
+    }
+}
