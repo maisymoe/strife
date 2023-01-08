@@ -11,7 +11,7 @@ function setExperiments(flags, expStore, bitwise = false) {
     } else {
         userMod.getCurrentUser().flags = flags;
     }
-    for (let h of handlers) h.actionHandler({ serializedExperimentStore: expStore, user: { flags: origFlags } });
+    for (let h of handlers) h.actionHandler({ serializedExperimentStore: expStore, user: { flags: flags } });
 }
 
 setExperiments(1, experimentMod.getSerializedState(), true);
