@@ -1,11 +1,17 @@
 const { findByProps } = vendetta.metro;
+const { after } = vendetta.patcher;
 
-const userMod = findByProps("getCurrentUser");
-const experimentMod = findByProps("getSerializedState");
-const handlers = userMod._dispatcher._actionHandlers._computeOrderedActionHandlers("OVERLAY_INITIALIZE").filter(h => h.name.includes("Experiment"));
+const userMod = findByProps("getUsers");
+const experimentMod = findByProps("isDeveloper");
+const nodes = Object.values(experimentMod._dispatcher._actionHandlers._dependencyGraph.nodes);
 
-userMod.getCurrentUser().flags |= 1;
-for (let h of handlers) h.actionHandler({ serializedExperimentStore: experimentMod.getSerializedState(), user: { flags: 1 } });
+let gcUserPatch = after("getCurrentUser", userMod, (args, ret) => ({ ...ret, hasFlag: () => true, isStaff: () => true }));
+try { nodes.find(x => x.name === "ExperimentStore").actionHandler["CONNECTION_OPEN"]({ user: { flags: 1 }, type: "CONNECTION_OPEN" }); } catch {};
+
+nodes.find(x => x.name === "DeveloperExperimentStore").actionHandler["CONNECTION_OPEN"]({});
+experimentMod.initialize.call({ waitFor: () => {}, getName: () => {} });
+
+gcUserPatch();
 
 export function onUnload() {
     // TODO: Is this really necessary?
