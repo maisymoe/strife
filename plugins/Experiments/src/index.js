@@ -7,7 +7,7 @@ const nodes = Object.values(experimentMod._dispatcher._actionHandlers._dependenc
 
 function setExperiments(state) {
     let gcUserPatch = after("getCurrentUser", userMod, (args, ret) => ({ ...ret, hasFlag: () => state, isStaff: () => state }));
-    try { nodes.find(x => x.name === "ExperimentStore").actionHandler["CONNECTION_OPEN"]({ user: { flags: 0 }, type: "CONNECTION_OPEN" }); } catch {};
+    try { nodes.find(x => x.name === "ExperimentStore").actionHandler["CONNECTION_OPEN"]({ user: { flags: state ? 1 : 0 }, type: "CONNECTION_OPEN" }); } catch {};
     
     nodes.find(x => x.name === "DeveloperExperimentStore").actionHandler["CONNECTION_OPEN"]({});
     experimentMod.initialize.call({ waitFor: () => {}, getName: () => {} });
