@@ -1,5 +1,5 @@
-const { findByProps } = vendetta.metro;
-const { after } = vendetta.patcher;
+import { findByProps } from "@vendetta/metro";
+import { after } from "@vendetta/patcher";
 
 const userMod = findByProps("getUsers");
 const experimentMod = findByProps("isDeveloper");

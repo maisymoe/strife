@@ -1,5 +1,5 @@
-const { findByProps } = vendetta.metro;
-const { instead } = vendetta.patcher;
+import { findByProps } from "@vendetta/metro";
+import { instead } from "@vendetta/patcher";
 
 const Metadata = findByProps("trackWithMetadata");
 const Analytics = findByProps("AnalyticsActionHandlers");

@@ -1,5 +1,5 @@
-const { instead } = vendetta.patcher;
-const { findByProps } = vendetta.metro;
+import { findByProps } from "@vendetta/metro";
+import { instead } from "@vendetta/patcher";
 
 const nitroInfo = findByProps("canUseEmojisEverywhere");
 

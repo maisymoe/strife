@@ -1,4 +1,4 @@
-const { findByProps } = vendetta.metro;
+import { findByProps } from "@vendetta/metro";
 const { getCustomEmojiById } = findByProps("getCustomEmojiById");
 const { getLastSelectedGuildId } = findByProps("getLastSelectedGuildId");
 
