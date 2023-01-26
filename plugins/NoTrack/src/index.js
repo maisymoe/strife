@@ -37,9 +37,8 @@ if (Sentry.main && Sentry.client) {
     patches.push(instead("addBreadcrumb", Sentry.main, () => {}));
 }
 
-// TODO: Figure out why analytics do not enable properly after unload
 export function onUnload() {
-    _.forEachRight(patches, (p) => p());
+    patches.forEach(p => p());
     if (Sentry.main && Sentry.client) {
         Sentry.client.getOptions().enabled = true;
     }

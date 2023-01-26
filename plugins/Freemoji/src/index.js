@@ -6,4 +6,4 @@ const patches = [
     ...sendMessage,
 ];
 
-export const onUnload = () => _.forEachRight(patches, (p) => p());
+export const onUnload = () => patches.forEach(p => p());

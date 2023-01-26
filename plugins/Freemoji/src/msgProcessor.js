@@ -16,8 +16,7 @@ function extractUnusableEmojis(messageString, size) {
 		// Check emoji usability
 		if (
 			emoji.guildId != getLastSelectedGuildId() ||
-			emoji.animated ||
-			isInDms()
+			emoji.animated
 		) {
 			// Remove emote from original msg
 			messageString = messageString.replace(emojiString[0], "");
