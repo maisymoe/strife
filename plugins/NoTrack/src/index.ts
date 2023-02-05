@@ -6,11 +6,13 @@ const Analytics = findByProps("AnalyticsActionHandlers");
 const Properties = findByProps("encodeProperties", "track");
 const Reporter = findByProps("submitLiveCrashReport");
 
-const patches = [];
+declare const __SENTRY__: any;
+
+const patches = new Array<Function>;
 
 const Sentry = {
-    main: window.__SENTRY__?.hub,
-    client: window.__SENTRY__?.hub?.getClient(),
+    main: __SENTRY__?.hub,
+    client: __SENTRY__?.hub?.getClient(),
 };
 
 if (Metadata) {
