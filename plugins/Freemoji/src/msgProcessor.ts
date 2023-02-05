@@ -1,4 +1,5 @@
 import { findByProps } from "@vendetta/metro";
+import { storage } from "@vendetta/plugin";
 import { Message } from "./def";
 const { getCustomEmojiById } = findByProps("getCustomEmojiById");
 const { getLastSelectedGuildId } = findByProps("getLastSelectedGuildId");
@@ -36,8 +37,7 @@ export default function modifyIfNeeded(msg: Message) {
 	if (!msg.content.match(hasEmotesRegex)) return;
 
 	// Find all emojis from the captured message string and return object with emojiURLS and content
-    // TODO: When Vendetta has persistent storage for plugins, change second arg to that
-	const { newContent, extractedEmojis } = extractUnusableEmojis(msg.content, 64);
+	const { newContent, extractedEmojis } = extractUnusableEmojis(msg.content, storage.emojiSize);
 
 	msg.content = newContent;
 
