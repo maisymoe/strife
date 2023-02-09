@@ -1,0 +1,14 @@
+{
+    "name": "ReactChat",
+    "description": "A POC of React-based chat. VERY WIP!",
+    "authors": [
+        {
+            "name": "Beef",
+            "id": "257109471589957632"
+        }
+    ],
+    "main": "src/index.tsx",
+    "vendetta": {
+        "icon": "ic_chat_bubble_16px"
+    }
+}
