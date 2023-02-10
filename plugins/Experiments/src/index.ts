@@ -25,15 +25,15 @@ export default {
                 setExperiments();
             }, 500);
         } catch(e) {
-            logger.log(`An error has occured with EnableStaging: ${e}`)
+            logger.log(`An error has occured with Experiments: ${e}`)
         }
     },
     onUnload: () => {
         Dialog.show({
-            title: "Experiments Disabled.",
+            title: "Experiments disabled",
             body: "Disabling Experiments requires a restart, would you like to restart Discord?",
-            confirmText: "Yes",
-            cancelText: "No",
+            confirmText: "Sure",
+            cancelText: "Not now",
             onConfirm: reload,
         });
     }
