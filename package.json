@@ -9,7 +9,7 @@
 		"esbuild": "^0.16.14",
 		"rollup": "^3.9.1",
 		"rollup-plugin-esbuild": "^5.0.0",
-		"vendetta-types": "latest"
+		"vendetta-types": "^2.3.4"
 	},
 	"pnpm": {
 		"peerDependencyRules": {

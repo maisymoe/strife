@@ -1,24 +1,40 @@
 import { findByProps } from "@vendetta/metro";
-import { after } from "@vendetta/patcher";
-import { Handler } from "./def";
+import { logger } from "@vendetta";
 
-const userMod = findByProps("getUsers");
-const experimentMod = findByProps("isDeveloper");
-const nodes: Handler[] = Object.values(experimentMod._dispatcher._actionHandlers._dependencyGraph.nodes);
+const CurrentUserStore = findByProps("getCurrentUser");
+const SerialState = findByProps("getSerializedState");
+const Dialog = findByProps('show', 'openLazy', 'close')
+const reload = () => findByProps("NativeModules").BundleUpdaterManager.reload;
 
-function setExperiments(state: boolean) {
-    let gcUserPatch = after("getCurrentUser", userMod, (args, ret) => ({ ...ret, hasFlag: () => state, isStaff: () => state }));
-    try { nodes.find((x: Handler) => x.name === "ExperimentStore").actionHandler["CONNECTION_OPEN"]({ user: { flags: state ? 1 : 0 }, type: "CONNECTION_OPEN" }); } catch {};
-    
-    nodes.find((x: Handler) => x.name === "DeveloperExperimentStore").actionHandler["CONNECTION_OPEN"]({});
-    experimentMod.initialize.call({ waitFor: () => {}, getName: () => {} });
-    
-    gcUserPatch();
-}
-
-export const onLoad = () => setExperiments(true);
-export function onUnload() {
-    setExperiments(false);
-    // TODO: Offer to do this for the user
-    alert("For developer features to be fully disabled, you must restart Discord.");
+export default {
+    onLoad: () => {
+        try {
+            const setExperiments = () => {
+                CurrentUserStore.getCurrentUser().flags |= 1;
+                CurrentUserStore._dispatcher._actionHandlers
+                    ._computeOrderedActionHandlers("OVERLAY_INITIALIZE")
+                    .forEach(function (e) {
+                        e.name.includes("Experiment") &&
+                        e.actionHandler({
+                            serializedExperimentStore: SerialState.getSerializedState(),
+                            user: { flags: 1 },
+                        });
+                    });
+            };
+            setTimeout(() => {
+                setExperiments();
+            }, 500);
+        } catch(e) {
+            logger.log(`An error has occured with EnableStaging: ${e}`)
+        }
+    },
+    onUnload: () => {
+        Dialog.show({
+            title: "Experiments Disabled.",
+            body: "Disabling Experiments requires a restart, would you like to restart Discord?",
+            confirmText: "Yes",
+            cancelText: "No",
+            onConfirm: reload,
+        });
+    }
 }
