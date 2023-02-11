@@ -1,25 +1,34 @@
-import { findByStoreName } from "@vendetta/metro";
-import { ReactNative as RN, Flux, channels } from "@vendetta/metro/common";
-import { Forms } from "@vendetta/ui/components";
+import { ReactNative as RN, constants, stylesheet } from "@vendetta/metro/common";
+import { useProxy } from "@vendetta/storage";
+import { state } from "../patches/interceptor";
+import Error from "./Error";
+import Message from "./Message";
 
-const MessageStore = findByStoreName("MessageStore");
+const styles = stylesheet.createThemedStyleSheet({
+    body: {
+        flex: 1,
+        flexDirection: "column",
+        backgroundColor: constants.ThemeColorMap.CHAT_BACKGROUND,
+        height: "100%",
+    }
+});
 
-interface ChatProps {
-    messages: any[];
-}
+// TODO: Chat lays out in wrong order
+export default function Chat() {
+    useProxy(state);
 
-function Chat({ messages }: ChatProps) {
-    if (!messages) return <RN.Text>Fucky wucky - no messages fetched?</RN.Text>;
+    if (state.rows.length === 0) return <Error error="Rows empty" />
 
     return (
-        <RN.FlatList
-            data={messages}
-            renderItem={({ item }) => <Forms.FormText>{item.content || "no content"}</Forms.FormText>}
-            keyExtractor={item => item.id}
-        />
+        <RN.View style={styles.body}>
+            <RN.FlatList
+                data={state.rows}
+                renderItem={({ item }) => {
+                    if (item.type === 1) return <Message row={item} />
+                    else return <Error error={`Unhandled message type ${item.type}`} />
+                }}
+                keyExtractor={item => item.index.toString()}
+            />
+        </RN.View>
     )
 }
-
-export default Flux.connectStores([MessageStore], () => ({
-    messages: MessageStore.getMessages(channels.getChannelId())?._array,
-}))(Chat);
