@@ -22,6 +22,7 @@ export default function Chat() {
     return (
         <RN.View style={styles.body}>
             <RN.FlatList
+                inverted
                 data={state.rows}
                 renderItem={({ item }) => {
                     if (item.type === 1) return <Message row={item} />
