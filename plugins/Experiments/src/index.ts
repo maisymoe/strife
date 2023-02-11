@@ -1,24 +1,36 @@
-import { findByProps } from "@vendetta/metro";
-import { after } from "@vendetta/patcher";
-import { Handler } from "./def";
+import { ReactNative } from "@vendetta/metro/common";
+import { findByProps, findByStoreName } from "@vendetta/metro";
+import { logger } from "@vendetta";
 
-const userMod = findByProps("getUsers");
-const experimentMod = findByProps("isDeveloper");
-const nodes: Handler[] = Object.values(experimentMod._dispatcher._actionHandlers._dependencyGraph.nodes);
+const { getSerializedState } = findByProps("getSerializedState");
+const UserStore = findByStoreName("UserStore");
+const Dialog = findByProps("show", "openLazy", "close");
 
-function setExperiments(state: boolean) {
-    let gcUserPatch = after("getCurrentUser", userMod, (args, ret) => ({ ...ret, hasFlag: () => state, isStaff: () => state }));
-    try { nodes.find((x: Handler) => x.name === "ExperimentStore").actionHandler["CONNECTION_OPEN"]({ user: { flags: state ? 1 : 0 }, type: "CONNECTION_OPEN" }); } catch {};
-    
-    nodes.find((x: Handler) => x.name === "DeveloperExperimentStore").actionHandler["CONNECTION_OPEN"]({});
-    experimentMod.initialize.call({ waitFor: () => {}, getName: () => {} });
-    
-    gcUserPatch();
+try {
+    // Add 1 (staff) to local user flags
+    UserStore.getCurrentUser().flags += 1;
+
+    // Filter for action handlers on event OVERLAY_INITIALIZE that have "Experiment" in their name
+    const actionHandlers = UserStore._dispatcher._actionHandlers._computeOrderedActionHandlers("OVERLAY_INITIALIZE").filter(e => e.name.includes("Experiment"));
+
+    // Call those action handlers with fake data
+    for (let a of actionHandlers) {
+        a.actionHandler({
+            serializedExperimentStore: getSerializedState(),
+            user: { flags: 1 },
+        });
+    }
+
+    // Remove 1 from local user flags, removing staff badge but leaving experiments intact
+    UserStore.getCurrentUser().flags -= 1;
+} catch(e) {
+    logger.log(`Experiments: Failed to enable experiments...`, e);
 }
 
-export const onLoad = () => setExperiments(true);
-export function onUnload() {
-    setExperiments(false);
-    // TODO: Offer to do this for the user
-    alert("For developer features to be fully disabled, you must restart Discord.");
-}
+export const onUnload = () => Dialog.show({
+    title: "Wait!",
+    body: "Disabling experiments requires a restart - would you like to do that now?",
+    confirmText: "Sure",
+    cancelText: "Not now",
+    onConfirm: ReactNative.NativeModules.BundleUpdaterManager.reload,
+});
