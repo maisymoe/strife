@@ -1,0 +1,14 @@
+{
+    "name": "ReviewDB",
+    "description": "Display and post reviews on user profiles.",
+    "authors": [
+        {
+            "name": "Beef",
+            "id": "257109471589957632"
+        }
+    ],
+    "main": "src/index.ts",
+    "vendetta": {
+        "icon": "ic_trending_16px"
+    }
+}
