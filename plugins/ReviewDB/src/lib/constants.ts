@@ -1,1 +1,2 @@
-export const AUTH_URL = "https://discord.com/api/v9/oauth2/authorize?client_id=915703782174752809&response_type=code&redirect_uri=https%3A%2F%2Fmanti.vendicated.dev%2FURauth&scope=identify";
+export const CLIENT_ID = "915703782174752809";
+export const API_URL = "https://manti.vendicated.dev";
