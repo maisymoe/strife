@@ -3,7 +3,7 @@ import { useProxy } from "@vendetta/storage";
 import { storage } from "@vendetta/plugin";
 import { getAssetIDByName } from "@vendetta/ui/assets";
 import { Forms } from "@vendetta/ui/components";
-import { showAuthModal } from "./lib/showAuthModal";
+import showAuthModal from "./lib/showAuthModal";
 
 const { FormSection, FormRow } = Forms;
 
