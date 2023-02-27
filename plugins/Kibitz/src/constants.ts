@@ -1,0 +1,1 @@
+export const WUNGUS_URL = "https://cdn.discordapp.com/attachments/809852237236273174/1079892152609419336/wungus.png";

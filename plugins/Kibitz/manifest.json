@@ -1,0 +1,14 @@
+{
+    "name": "Kibitz",
+    "description": "The Maze is meant for us.",
+    "authors": [
+        {
+            "name": "Beef",
+            "id": "257109471589957632"
+        }
+    ],
+    "main": "src/index.ts",
+    "vendetta": {
+        "icon": "ic_highlight_16px"
+    }
+}
