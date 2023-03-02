@@ -1,10 +1,10 @@
 import { ReactNative } from "@vendetta/metro/common";
 import { findByProps, findByStoreName } from "@vendetta/metro";
+import { alerts } from "@vendetta/ui";
 import { logger } from "@vendetta";
 
 const { getSerializedState } = findByProps("getSerializedState");
 const UserStore = findByStoreName("UserStore");
-const Dialog = findByProps("show", "openLazy", "close");
 
 try {
     // Add 1 (staff) to local user flags
@@ -27,10 +27,12 @@ try {
     logger.log(`Experiments: Failed to enable experiments...`, e);
 }
 
-export const onUnload = () => Dialog.show({
+export const onUnload = () => alerts.showConfirmationAlert({
     title: "Wait!",
-    body: "Disabling experiments requires a restart - would you like to do that now?",
+    content: "Disabling experiments requires a restart - would you like to do that now?",
     confirmText: "Sure",
     cancelText: "Not now",
+    // @ts-expect-error oh god
+    confirmColor: "red",
     onConfirm: ReactNative.NativeModules.BundleUpdaterManager.reload,
 });

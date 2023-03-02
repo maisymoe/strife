@@ -23,8 +23,7 @@ export default () => pushModal({
             responseType: "code",
             permissions: 0n,
             cancelCompletesFlow: false,
-            // I REALLY wish Hermes let me do async arrow functions...
-            callback: (async function ({ location }) {
+            callback: async ({ location }) => {
                 try {
                     const url = new URL(location);
                     url.searchParams.append("returnType", "json");
@@ -43,7 +42,7 @@ export default () => pushModal({
                     // TODO: Do we need a toast?
                     logger.error("Authorization failed!", e);
                 }
-            }),
+            },
             dismissOAuthModal: () => popModal("oauth2-authorize"),
         },
         closable: true,
