@@ -1,0 +1,14 @@
+{
+    "name": "PinSettings",
+    "description": "Allows pinning plugin settings to User Settings.",
+    "authors": [
+        {
+            "name": "Beef",
+            "id": "257109471589957632"
+        }
+    ],
+    "main": "src/index.ts",
+    "vendetta": {
+        "icon": "ic_pins"
+    }
+}
