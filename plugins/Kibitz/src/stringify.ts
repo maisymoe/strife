@@ -17,7 +17,7 @@ const text = (text: string, key?: keyof typeof scheme) => {
     ? {
       color: scheme[key],
     }
-    : {color:"#f00"};
+    : {};
   return React.createElement(Text, { style }, text);
 };
 
