@@ -4,6 +4,8 @@ import { showToast } from "@vendetta/ui/toasts";
 import { getAssetIDByName } from "@vendetta/ui/assets";
 import { Forms, Summary } from "@vendetta/ui/components";
 import { Dispatch } from "../def";
+import { React } from "@vendetta/metro/common";
+import stringify from "../stringify";
 
 interface InspectDispatchProps {
     dispatch: Dispatch;
@@ -12,7 +14,8 @@ interface InspectDispatchProps {
 const { FormRow, FormDivider, FormText } = Forms;
 
 export default function InspectDispatch({ dispatch }: InspectDispatchProps) {
-    const dataString = JSON.stringify(dispatch.data, null, 4);
+    const dataString = React.useMemo(() => JSON.stringify(dispatch.data, null, 4), [dispatch]);
+    const dataText = React.useMemo(() => stringify(dispatch.data), [dispatch]);
 
     return (
         <RN.ScrollView style={{ flex: 1 }}>
@@ -34,7 +37,7 @@ export default function InspectDispatch({ dispatch }: InspectDispatchProps) {
                     }}
                 >
                     <FormText style={{ fontFamily: constants.Fonts.CODE_SEMIBOLD, fontSize: 12 }}>
-                        {dataString}
+                        {dataText}
                     </FormText>
                 </RN.TouchableOpacity>
             </Summary>
