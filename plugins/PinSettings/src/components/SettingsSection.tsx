@@ -1,7 +1,7 @@
 import { useProxy } from "@vendetta/storage";
 import { storage } from "@vendetta/plugin";
 import { plugins } from "@vendetta/plugins";
-import { Forms } from "@vendetta/ui/components";
+import { ErrorBoundary, Forms } from "@vendetta/ui/components";
 import SettingsRow from "./SettingsRow";
 
 const { FormSection, FormDivider } = Forms;
@@ -21,12 +21,14 @@ export default function SettingsSection() {
     ))
 
     if (storage.appendExisting) {
-        return <>{mappedRows}</>;
+        return <ErrorBoundary>{mappedRows}</ErrorBoundary>;
     } else {
         return (
-            <FormSection key="PinSettingsPlugins" title={`${hasOtherMods ? "Vendetta " : ""}Plugins`}>
-                {mappedRows}
-            </FormSection>
+            <ErrorBoundary>
+                <FormSection key="PinSettingsPlugins" title={`${hasOtherMods ? "Vendetta " : ""}Plugins`}>
+                    {mappedRows}
+                </FormSection>
+            </ErrorBoundary>
         )
     }
 }
