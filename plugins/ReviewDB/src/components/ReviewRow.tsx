@@ -1,10 +1,10 @@
 import { ReactNative as RN, stylesheet } from "@vendetta/metro/common";
 import { findByProps } from "@vendetta/metro";
-import { Review } from "../def";
 import { Forms } from "@vendetta/ui/components";
+import { Review } from "../def";
 
 interface ReviewRowProps {
-    review: Review,
+    review: Review;
 }
 
 const styles = stylesheet.createThemedStyleSheet({

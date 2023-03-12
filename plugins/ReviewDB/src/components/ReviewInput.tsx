@@ -10,8 +10,9 @@ import { addReview } from "../lib/api";
 // TODO: Properly handle existing reviews - whilst it does work fine right now, add a visual representation
 
 interface ReviewInputProps {
-    userId: string,
-    refetch: () => void,
+    userId: string;
+    shouldEdit?: boolean;
+    refetch: () => void;
 }
 
 const styles = stylesheet.createThemedStyleSheet({
@@ -44,7 +45,7 @@ const styles = stylesheet.createThemedStyleSheet({
 const { colors, meta } = findByProps("colors", "meta");
 const useThemeContext = findByProps("useThemeContext").useThemeContext;
 
-export default function ReviewInput({ userId, refetch }: ReviewInputProps) {
+export default function ReviewInput({ userId, shouldEdit, refetch }: ReviewInputProps) {
     useProxy(storage);
     const themeContext = useThemeContext();
     const textColor = meta.resolveSemanticColor(themeContext.theme, colors.TEXT_NORMAL);
@@ -59,7 +60,7 @@ export default function ReviewInput({ userId, refetch }: ReviewInputProps) {
             <RN.TextInput
                 style={{ ...styles.textInput, color: textColor }}
                 editable={!disableTextArea}
-                placeholder={disableTextArea ? "You must be authorised to add a review." : "Tap to add a review"}
+                placeholder={disableTextArea ? "You must be authorised to add a review." : `Tap to ${shouldEdit ? "edit your" : "add a"} review`}
                 placeholderTextColor={placeholderColor}
                 value={reviewText}
                 onChangeText={(i: string) => setReviewText(i)}
