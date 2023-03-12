@@ -1,6 +1,7 @@
 import { ReactNative as RN, stylesheet } from "@vendetta/metro/common";
-import { Forms } from "@vendetta/ui/components";
+import { findByProps } from "@vendetta/metro";
 import { Review } from "../def";
+import { Forms } from "@vendetta/ui/components";
 
 interface ReviewRowProps {
     review: Review,
@@ -14,11 +15,21 @@ const styles = stylesheet.createThemedStyleSheet({
     },
 });
 
+const { FormRow, FormLabel, FormSubLabel } = Forms;
+const { colors, meta } = findByProps("colors", "meta");
+const useThemeContext = findByProps("useThemeContext").useThemeContext;
+
+// This component behaves VERY similarly to this custom one, but subLabel doesn't get themed so... here we are!
+// const UserProfileRow = findByDisplayName("UserProfileRow");
+
 export default function ReviewRow({ review }: ReviewRowProps) {
+    const themeContext = useThemeContext();
+    const labelColor = meta.resolveSemanticColor(themeContext.theme, colors.TEXT_NORMAL);
+
     return (
-        <Forms.FormRow
-            label={review.username}
-            subLabel={review.comment}
+        <FormRow
+            label={<FormLabel text={review.username} style={{ color: labelColor }} />}
+            subLabel={<FormSubLabel text={review.comment} style={{ color: labelColor }} />}
             leading={<RN.Image style={styles.avatar} source={{ uri: review.profile_photo }} />}
         />
     )
