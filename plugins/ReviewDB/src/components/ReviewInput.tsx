@@ -60,7 +60,7 @@ export default function ReviewInput({ userId, shouldEdit, refetch }: ReviewInput
             <RN.TextInput
                 style={{ ...styles.textInput, color: textColor }}
                 editable={!disableTextArea}
-                placeholder={disableTextArea ? "You must be authorised to add a review." : `Tap to ${shouldEdit ? "edit your" : "add a"} review`}
+                placeholder={disableTextArea ? "You must be authenticated to add a review." : `Tap to ${shouldEdit ? "edit your" : "add a"} review`}
                 placeholderTextColor={placeholderColor}
                 value={reviewText}
                 onChangeText={(i: string) => setReviewText(i)}
