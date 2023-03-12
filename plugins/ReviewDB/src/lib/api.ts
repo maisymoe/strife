@@ -9,6 +9,11 @@ export async function getReviews(userId: string): Promise<Review[]> {
     return await res.json();
 }
 
+export async function getAdmins(): Promise<string[]> {
+    const res = await safeFetch(API_URL + "/admins", {});
+    return await res.json();
+}
+
 export async function addReview(userId: string, comment: string) {
     const res = await safeFetch(API_URL + "/addUserReview", {
         method: "POST",
