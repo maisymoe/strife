@@ -1,0 +1,14 @@
+{
+    "name": "Fellowship",
+    "description": "Enmity compatibility layer for Vendetta.",
+    "authors": [
+        {
+            "name": "Beef",
+            "id": "257109471589957632"
+        }
+    ],
+    "main": "src/index.ts",
+    "vendetta": {
+        "icon": "mobile"
+    }
+}
