@@ -17,7 +17,7 @@ export const instead = (caller: string, funcParent: any, funcName: string, callb
 export const after = (caller: string, funcParent: any, funcName: string, callback: Function, oneTime: boolean) => patcher.after(funcName, funcParent, wrapCallback("after", callback), oneTime);
 
 export const create = () => ({
-    getPatchesByCaller: () => stub("getPatchesByCaller"),
+    getPatchesByCaller: () => stub("getPatchesByCaller", []),
     before,
     instead,
     after,
