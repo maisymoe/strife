@@ -15,11 +15,12 @@ function wrapCallback (type: PatchType, callback: Function, original?: Function)
 export const before = (caller: string, funcParent: any, funcName: string, callback: Function, oneTime: boolean) => patcher.before(funcName, funcParent, wrapCallback("before", callback, funcParent?.[funcName]), oneTime);
 export const instead = (caller: string, funcParent: any, funcName: string, callback: Function, oneTime: boolean) => patcher.instead(funcName, funcParent, wrapCallback("before", callback), oneTime);
 export const after = (caller: string, funcParent: any, funcName: string, callback: Function, oneTime: boolean) => patcher.after(funcName, funcParent, wrapCallback("after", callback), oneTime);
+export const unpatchAll = () => stub("unpatchAll");
 
 export const create = () => ({
     getPatchesByCaller: () => stub("getPatchesByCaller", []),
     before,
     instead,
     after,
-    unpatchAll: () => stub("unpatchAll"),
+    unpatchAll,
 });
