@@ -27,7 +27,7 @@ export const Theme = findByProps("theme");
 export const Linking = common.ReactNative.Linking;
 export const StyleSheet = common.stylesheet;
 // TODO: Is this okay?
-export const ThemeColorMap = { ThemeColorMap: semanticColors, Colors: rawColors };
+export const ColorMap = { ThemeColorMap: semanticColors, Colors: rawColors };
 export const Components = { Forms: Forms, General: General };
 export const Locale = findByProps("Messages");
 export const Profiles = findByProps("showUserProfile");
