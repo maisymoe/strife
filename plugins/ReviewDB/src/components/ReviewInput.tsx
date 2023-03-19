@@ -72,7 +72,7 @@ export default function ReviewInput({ userId, shouldEdit, refetch }: ReviewInput
                     addReview(userId, reviewText).then((res) => {
                         setReviewText("");
                         refetch();
-                        showToast(res, getAssetIDByName("Check"));
+                        showToast(res.message, getAssetIDByName("Check"));
                     }).catch((err) => showToast(err, getAssetIDByName("Small")));
                 }}
             >

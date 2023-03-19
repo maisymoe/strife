@@ -19,7 +19,7 @@ export default function ReviewSection({ userId }: ReviewSectionProps) {
     const fetchReviews = () => { getReviews(userId).then(i => setReviews(i)) };
     React.useEffect(fetchReviews, []);
 
-    const hasExistingReview = reviews.filter(i => i.senderdiscordid === getCurrentUser()?.id).length !== 0;
+    const hasExistingReview = reviews.filter(i => i.sender.discordID === getCurrentUser()?.id).length !== 0;
 
     return (
         <ErrorBoundary>

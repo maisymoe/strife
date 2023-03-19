@@ -6,7 +6,7 @@ import ReviewSection from "../components/ReviewSection";
 
 const UserProfile = find(m => m.type?.name === "UserProfile");
 
-export const patchProfile = () => after("type", UserProfile, (args, ret) => {
+export default () => after("type", UserProfile, (args, ret) => {
     const profileCardSection = findInReactTree(ret, r =>
         r?.props?.children.find((res: any) => typeof res?.props?.displayProfile?.userId === "string") &&
         r?.type?.displayName === "View" &&

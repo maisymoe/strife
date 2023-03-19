@@ -2,7 +2,7 @@ import { ReactNative as RN, stylesheet } from "@vendetta/metro/common";
 import { findByProps } from "@vendetta/metro";
 import { Forms } from "@vendetta/ui/components";
 import { Review } from "../def";
-import { showReviewActionSheet } from "../lib/showReviewActionSheet";
+import showReviewActionSheet from "../lib/showReviewActionSheet";
 
 interface ReviewRowProps {
     review: Review;
@@ -29,9 +29,9 @@ export default function ReviewRow({ review }: ReviewRowProps) {
 
     return (
         <FormRow
-            label={<FormLabel text={review.username} style={{ color: labelColor }} />}
+            label={<FormLabel text={review.sender.username} style={{ color: labelColor }} />}
             subLabel={<FormSubLabel text={review.comment} style={{ color: labelColor }} />}
-            leading={<RN.Image style={styles.avatar} source={{ uri: review.profile_photo }} />}
+            leading={<RN.Image style={styles.avatar} source={{ uri: review.sender.profilePhoto }} />}
             onLongPress={() => showReviewActionSheet(review)}
         />
     )

@@ -1,28 +1,19 @@
-import { ReactNative as RN, clipboard, stylesheet } from "@vendetta/metro/common";
+import { clipboard } from "@vendetta/metro/common";
 import { findByProps } from "@vendetta/metro";
+import { storage } from "@vendetta/plugin";
 import { showConfirmationAlert } from "@vendetta/ui/alerts";
+import { showToast } from "@vendetta/ui/toasts";
+import { getAssetIDByName } from "@vendetta/ui/assets";
 import { Review } from "../def";
 import { deleteReview, reportReview } from "./api";
 import { canDeleteReview } from "./utils";
-import { showToast } from "@vendetta/ui/toasts";
-import { getAssetIDByName } from "@vendetta/ui/assets";
-import { storage } from "@vendetta/plugin";
-
-const styles = stylesheet.createThemedStyleSheet({
-    icon: {
-        height: 16,
-        width: 16,
-        borderRadius: 8,
-    },
-});
-
 const { hideActionSheet } = findByProps("openLazy", "hideActionSheet");
 const { showSimpleActionSheet } = findByProps("showSimpleActionSheet");
 
-export const showReviewActionSheet = (review: Review) => showSimpleActionSheet({
+export default (review: Review) => showSimpleActionSheet({
     key: "ReviewOverflow",
     header: {
-        title: `Review by ${review.username}`,
+        title: review.type !== 3 ? `Review by ${review.sender.username}` : "ReviewDB System Message",
         // TODO: Return to the user profile
         onClose: () => hideActionSheet(),
     },
@@ -34,7 +25,7 @@ export const showReviewActionSheet = (review: Review) => showSimpleActionSheet({
                 showToast("Copied Review Text", getAssetIDByName("ic_message_copy"));
             }
         },
-        ...(storage.authToken ? [
+        ...(storage.authToken && review.type !== 3 ? [
             ...(canDeleteReview(review) ? [{
                 label: "Delete Review",
                 isDestructive: true,
@@ -45,7 +36,7 @@ export const showReviewActionSheet = (review: Review) => showSimpleActionSheet({
                     cancelText: "No",
                     // @ts-ignore
                     confirmColor: "red",
-                    onConfirm: () => deleteReview(review.id),
+                    onConfirm: () => deleteReview(review.sender.discordID, review.id),
                 })
             }] : []),
             {

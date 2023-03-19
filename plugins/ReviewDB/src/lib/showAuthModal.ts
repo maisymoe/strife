@@ -1,8 +1,8 @@
 import { findByProps, findByDisplayName } from "@vendetta/metro";
 import { storage } from "@vendetta/plugin";
-import { safeFetch } from "@vendetta/utils";
 import { logger } from "@vendetta";
 import { CLIENT_ID, API_URL } from "./constants";
+import { jsonFetch } from "./utils";
 
 const { pushModal, popModal } = findByProps("pushModal");
 const OAuth2AuthorizeModal = findByDisplayName("OAuth2AuthorizeModal");
@@ -18,7 +18,7 @@ export default () => pushModal({
         shouldPersistUnderModals: false,
         props: {
             clientId: CLIENT_ID,
-            redirectUri: API_URL + "/URauth",
+            redirectUri: API_URL + "/auth",
             scopes: ["identify"],
             responseType: "code",
             permissions: 0n,
@@ -29,14 +29,13 @@ export default () => pushModal({
                     url.searchParams.append("returnType", "json");
                     url.searchParams.append("clientMod", "vendetta");
 
-                    // TODO: safeFetch should, by all means, accept a URL. Why doesn't it?
-                    const res = await safeFetch(url.toString(), { headers: { accept: "application/json" } });
-                    const { token, status } = await res.json();
+                    const { token, success, message } = await jsonFetch(url, { headers: { accept: "application/json" } });
 
-                    if (status === 0) {
+                    if (success) {
                         storage.authToken = token;
                     } else {
-                        throw new Error("Status returned by backend was not OK");
+                        popModal("oauth2-authorize");
+                        throw new Error(message);
                     }
                 } catch(e) {
                     // TODO: Do we need a toast?

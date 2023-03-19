@@ -1,12 +1,14 @@
 import { storage } from "@vendetta/plugin";
-import { patchProfile } from "./patches/patchProfile";
 import { getAdmins } from "./lib/api";
+import patchProfile from "./patches/patchProfile";
+import exposeAPI from "./patches/exposeAPI";
 
 // Default settings
 // TODO: Do I need to do this?
 storage.authToken ??= "";
 
 const patches = [
+    exposeAPI(),
     patchProfile(),
 ];
 

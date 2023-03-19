@@ -1,9 +1,26 @@
+export interface APIResponse {
+    [index: string]: any;
+    success: boolean;
+    message: string;
+    updated: false;
+}
+
+// USER = 0
+// SERVER = 1
+// ADVERT = 2
+// SYSTEM = 3
+export type ReviewType = 0 | 1 | 2 | 3;
+
 export interface Review {
-    comment: string;
     id: number;
-    senderdiscordid: string;
-    senderuserid: number;
+    sender: {
+        id: number;
+        discordID: string;
+        username: string;
+        profilePhoto: string;
+    },
     star: number;
-    username: string;
-    profile_photo: string;
+    comment: string;
+    type: ReviewType;
+    timestamp: number;
 }

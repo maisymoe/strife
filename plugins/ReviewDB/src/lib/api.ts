@@ -1,64 +1,48 @@
-import { safeFetch } from "@vendetta/utils";
 import { storage } from "@vendetta/plugin";
+import { safeFetch } from "@vendetta/utils";
 import { Review } from "../def";
-import { API_URL } from "./constants";
+import { BASE_URL, API_URL } from "./constants";
+import { jsonFetch } from "./utils";
 
-export async function getReviews(userId: string): Promise<Review[]> {
-    // TODO: What was I doing when I wrote safeFetch? Options should be, well, optional...
-    const res = await safeFetch(API_URL + "/getUserReviews?discordid=" + userId, {});
-    return await res.json();
-}
+export const getReviews = async (userId: string): Promise<Review[]> => (await jsonFetch(API_URL + `/users/${userId}/reviews`)).reviews;
 
-export async function getAdmins(): Promise<string[]> {
-    const res = await safeFetch(API_URL + "/admins", {});
-    return await res.json();
-}
+export const getAdmins = async () => await jsonFetch<string[]>(BASE_URL + "/admins");
 
-export async function addReview(userId: string, comment: string) {
-    const res = await safeFetch(API_URL + "/addUserReview", {
-        method: "POST",
-        body: JSON.stringify({
-            userid: userId,
-            comment: comment,
-            token: storage.authToken,
-        }),
-        headers: {
-            "content-type": "application/json",
-            accept: "text/plain",
-        },
-    });
-    return await res.text();
-}
+export const addReview = async (userId: string, comment: string) => await jsonFetch(API_URL + `/users/${userId}/reviews`, {
+    method: "PUT",
+    body: JSON.stringify({
+        comment: comment,
+        token: storage.authToken,
+    }),
+    headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+    },
+});
 
-export async function deleteReview(id: number) {
-    const res = await safeFetch(API_URL + "/deleteReview", {
-        method: "POST",
-        headers: {
-            "content-type": "application/json",
-            accept: "application/json",
-        },
-        body: JSON.stringify({
-            reviewid: id,
-            token: storage.authToken,
-        }),
-    });
-    return await res.json();
-}
+export const deleteReview = async (userId: string, id: number) => await jsonFetch(API_URL + `/users/${userId}/reviews`, {
+    method: "DELETE",
+    headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+    },
+    body: JSON.stringify({
+        reviewid: id,
+        token: storage.authToken,
+    }),
+});
 
-export async function reportReview(id: number) {
-    const res = await safeFetch(API_URL + "/reportReview", {
-        method: "POST",
-        headers: {
-            "content-type": "application/json",
-            accept: "text/plain",
-        },
-        body: JSON.stringify({
-            reviewid: id,
-            token: storage.authToken,
-        }),
-    });
-    return await res.text();
-}
+export const reportReview = async (id: number) => await jsonFetch(API_URL + "/reports", {
+    method: "PUT",
+    headers: {
+        "content-type": "application/json",
+        accept: "application/json",
+    },
+    body: JSON.stringify({
+        reviewid: id,
+        token: storage.authToken,
+    }),
+});
 
 export async function getLastReviewID(id: string): Promise<number> {
     const res = await safeFetch(API_URL + "/getLastReviewID?discordid=" + id, {});
