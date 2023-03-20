@@ -1,8 +1,8 @@
-import { findByProps } from "@vendetta/metro";
+import { findByStoreName } from "@vendetta/metro";
 import { storage } from "@vendetta/plugin";
 import { Message } from "./def";
-const { getCustomEmojiById } = findByProps("getCustomEmojiById");
-const { getLastSelectedGuildId } = findByProps("getLastSelectedGuildId");
+const { getCustomEmojiById } = findByStoreName("EmojiStore");
+const { getGuildId } = findByStoreName("SelectedGuildStore");
 
 // https://github.com/luimu64/nitro-spoof/blob/1bb75a2471c39669d590bfbabeb7b922672929f5/index.js#L25
 const hasEmotesRegex = /<a?:(\w+):(\d+)>/i;
@@ -17,7 +17,7 @@ function extractUnusableEmojis(messageString: string, size: number) {
 
 		// Check emoji usability
 		if (
-			emoji.guildId != getLastSelectedGuildId() ||
+			emoji.guildId != getGuildId() ||
 			emoji.animated
 		) {
 			// Remove emote from original msg
