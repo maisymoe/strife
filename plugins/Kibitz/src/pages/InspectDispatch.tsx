@@ -1,5 +1,4 @@
-import { ReactNative as RN, constants } from "@vendetta/metro/common";
-import { copyText } from "@vendetta/utils";
+import { ReactNative as RN, clipboard, constants } from "@vendetta/metro/common";
 import { showToast } from "@vendetta/ui/toasts";
 import { getAssetIDByName } from "@vendetta/ui/assets";
 import { Forms, Summary } from "@vendetta/ui/components";
@@ -31,7 +30,7 @@ export default function InspectDispatch({ dispatch }: InspectDispatchProps) {
             <Summary label="Data" icon="ic_channels_24px">
                 <RN.TouchableOpacity
                     onLongPress={() => {
-                        copyText(dataString);
+                        clipboard.setString(dataString);
                         showToast("Copied dispatch data to clipboard.", getAssetIDByName("toast_copy_link"));
                     }}
                 >
