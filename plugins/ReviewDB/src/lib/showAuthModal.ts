@@ -1,11 +1,11 @@
-import { findByProps, findByDisplayName } from "@vendetta/metro";
+import { findByProps, findByName } from "@vendetta/metro";
 import { storage } from "@vendetta/plugin";
 import { logger } from "@vendetta";
 import { CLIENT_ID, API_URL } from "./constants";
 import { jsonFetch } from "./utils";
 
 const { pushModal, popModal } = findByProps("pushModal");
-const OAuth2AuthorizeModal = findByDisplayName("OAuth2AuthorizeModal");
+const OAuth2AuthorizeModal = findByName("OAuth2AuthorizeModal");
 
 // Thank you to Fiery for figuring out the base for this
 // Some inspiration taken from https://github.com/Vendicated/Vencord/blob/77c691651e72ba1569666d560f96af04bfde9a4e/src/plugins/reviewDB/Utils/Utils.tsx#L39-L73

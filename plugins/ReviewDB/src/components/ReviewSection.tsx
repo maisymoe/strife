@@ -1,5 +1,5 @@
 import { React, ReactNative as RN } from "@vendetta/metro/common";
-import { findByDisplayName, findByStoreName } from "@vendetta/metro";
+import { findByName, findByStoreName } from "@vendetta/metro";
 import { ErrorBoundary } from "@vendetta/ui/components"
 import { Review } from "../def";
 import { getReviews } from "../lib/api";
@@ -7,7 +7,7 @@ import ReviewRow from "./ReviewRow";
 import ReviewInput from "./ReviewInput";
 
 const { getCurrentUser } = findByStoreName("UserStore");
-const UserProfileSection = findByDisplayName("UserProfileSection");
+const UserProfileSection = findByName("UserProfileSection");
 
 interface ReviewSectionProps {
     userId: string;

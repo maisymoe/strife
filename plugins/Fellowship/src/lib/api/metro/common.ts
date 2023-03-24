@@ -1,8 +1,6 @@
-import { common, findByDisplayName, findByProps } from "@vendetta/metro";
+import { common, findByName, findByProps } from "@vendetta/metro";
 import { General, Forms } from "@vendetta/ui/components";
 import { semanticColors, rawColors } from "@vendetta/ui";
-
-// TODO: findByDisplayName -> findByName when it is available
 
 export const Constants = common.constants;
 export const Clipboard = common.clipboard;
@@ -32,8 +30,8 @@ export const Components = { Forms: Forms, General: General };
 export const Locale = findByProps("Messages");
 export const Profiles = findByProps("showUserProfile");
 export const Lodash = findByProps("debounce", "throttle");
-export const Logger = findByDisplayName("Logger");
+export const Logger = findByName("Logger");
 export const Flux = common.Flux;
 export const SVG = findByProps("Svg");
-export const Scenes = findByDisplayName("getScreens", false);
+export const Scenes = findByName("getScreens", false);
 export const Moment = common.moment;

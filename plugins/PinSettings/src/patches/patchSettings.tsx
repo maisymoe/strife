@@ -1,10 +1,10 @@
 import { ReactNative as RN, i18n } from "@vendetta/metro/common";
-import { findByDisplayName } from "@vendetta/metro";
+import { findByName } from "@vendetta/metro";
 import { after } from "@vendetta/patcher";
 import { findInReactTree } from "@vendetta/utils";
 import SettingsSection from "../components/SettingsSection";
 
-const settingsModule = findByDisplayName("UserSettingsOverviewWrapper", false);
+const settingsModule = findByName("UserSettingsOverviewWrapper", false);
 
 export default function patchSettings() {
     const patches = new Array<Function>;

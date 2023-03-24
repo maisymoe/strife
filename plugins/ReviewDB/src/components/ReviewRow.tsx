@@ -21,7 +21,7 @@ const { colors, meta } = findByProps("colors", "meta");
 const useThemeContext = findByProps("useThemeContext").useThemeContext;
 
 // This component behaves VERY similarly to this custom one, but subLabel doesn't get themed so... here we are!
-// const UserProfileRow = findByDisplayName("UserProfileRow");
+// const UserProfileRow = findByName("UserProfileRow");
 
 export default function ReviewRow({ review }: ReviewRowProps) {
     const themeContext = useThemeContext();
