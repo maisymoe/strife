@@ -1,5 +1,5 @@
 import { storage } from "@vendetta/plugin";
-import windowObject from "./lib/windowObject";
+import windowObject from "./patches/windowObject";
 
 // Default storage values
 storage.plugins ??= {};
