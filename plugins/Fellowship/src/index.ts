@@ -3,7 +3,7 @@ import windowObject from "./patches/windowObject";
 
 // Default storage values
 // Migration code, shouldn't be needed but :shrug:
-if (storage.plugins && !Array.isArray(storage.plugins)) storage.plugins = [];
+if (!Array.isArray(storage.plugins)) storage.plugins = [];
 storage.enabledPlugins ??= [];
 storage.disabledPlugins ??= [];
 
