@@ -1,9 +1,13 @@
 import { ReactNative } from "@vendetta/metro/common";
-const { InfoDictionaryManager, BundleUpdaterManager, DCDDeviceManager } = ReactNative.NativeModules;
+const { NativeModules: nm } = ReactNative;
 
-export const bundle = InfoDictionaryManager.Identifier;
-export const reload = BundleUpdaterManager.reload;
-export const version = InfoDictionaryManager.Version;
-export const os = DCDDeviceManager.systemVersion;
-export const build = InfoDictionaryManager.Build;
-export const device = DCDDeviceManager.device;
+const clientInfo = nm.InfoDictionaryManager ?? nm.RTNClientInfoManager;
+const deviceInfo = nm.DCDDeviceManager ?? nm.RTNDeviceManager;
+const bundleUpdater = nm.BundleUpdaterManager;
+
+export const bundle = clientInfo.Identifier;
+export const reload = bundleUpdater.reload;
+export const version = clientInfo.Version;
+export const os = deviceInfo.systemVersion;
+export const build = clientInfo.Build;
+export const device = deviceInfo.device;
