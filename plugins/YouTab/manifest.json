@@ -1,0 +1,14 @@
+{
+    "name": "YouTab",
+    "description": "Adds Vendetta's settings to the New You Tab settings.",
+    "authors": [
+        {
+            "name": "Beef",
+            "id": "257109471589957632"
+        }
+    ],
+    "main": "src/index.ts",
+    "vendetta": {
+        "icon": "debug"
+    }
+}
