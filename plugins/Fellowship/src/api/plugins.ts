@@ -1,7 +1,7 @@
 import type { Plugin as EnmityPlugin } from "enmity/managers/plugins";
 import { logger } from "@vendetta";
 import { storage } from "@vendetta/plugin";
-import { stub } from "../utils";
+import { nativeResponse, stub } from "../utils";
 
 // convenience
 const plugins = storage.plugins as EnmityPlugin[];
@@ -51,10 +51,7 @@ export function disablePlugin(name: string, onlyUnload = false, callback?: (resu
     if (!onlyUnload) disabled.push(name);
     getPlugin(name).onDisable();
 
-    return new Promise(resolve => {
-        callback?.("disabled-plugin");
-        resolve("disabled-plugin");
-    })
+    return nativeResponse("disabled-plugin", callback);
 }
 
 export function enablePlugin(name: string, callback?: (result: any) => void) {
@@ -63,10 +60,7 @@ export function enablePlugin(name: string, callback?: (result: any) => void) {
     enabled.push(name);
     getPlugin(name).onEnable();
 
-    return new Promise(resolve => {
-        callback?.("enabled-plugin");
-        resolve("enabled-plugin");
-    })
+    return nativeResponse("enabled-plugin", callback);
 }
 
 export const evalPlugin = async () => stub("evalPlugin", "");
