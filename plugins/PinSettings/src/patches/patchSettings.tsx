@@ -1,7 +1,8 @@
-import { ReactNative as RN, i18n } from "@vendetta/metro/common";
+import { i18n } from "@vendetta/metro/common";
 import { findByName } from "@vendetta/metro";
 import { after } from "@vendetta/patcher";
 import { findInReactTree } from "@vendetta/utils";
+import { Forms } from "@vendetta/ui/components";
 import SettingsSection from "../components/SettingsSection";
 
 const settingsModule = findByName("UserSettingsOverviewWrapper", false);
@@ -14,7 +15,8 @@ export default function patchSettings() {
 
         patches.push(after("render", Overview.type.prototype, (_, { props: { children } }) => {
             const titles = [i18n.Messages["BILLING_SETTINGS"], i18n.Messages["PREMIUM_SETTINGS"]];
-            const index = children.findIndex((c: any) => titles.includes(c.props.title));
+            children = findInReactTree(children, (tree) => tree.children[1].type === Forms.FormSection).children;
+            const index = children.findIndex((c: any) => titles.includes(c?.props.label));
             children.splice(index === -1 ? 4 : index, 0, <SettingsSection />);
         }));
 
