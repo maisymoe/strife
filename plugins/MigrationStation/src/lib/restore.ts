@@ -1,7 +1,5 @@
 import { settings } from "@vendetta";
 import { config } from "@vendetta/loader"
-// @ts-expect-error
-// TODO: Fix this in vendetta-types, startPlugin just isn't listed???
 import { fetchPlugin, plugins, stopPlugin, startPlugin } from "@vendetta/plugins";
 import { fetchTheme, selectTheme, themes } from "@vendetta/themes";
 import { createMMKVBackend } from "@vendetta/storage";
@@ -18,9 +16,7 @@ export async function restorePlugins(backup: Record<string, PluginBackup>, resto
     for (const plugin of Object.values(backup)) {
         if (!plugins[plugin.id]) {
             // Try fetching the plugin first, fall back to backup
-            // @ts-expect-error
-            // TODO: Fix this in vendetta-types, some plugin functions are not marked as async when they should be
-            await fetchPlugin(plugin.id, false).catch(() => {
+            await fetchPlugin(plugin.id).catch(() => {
                 try {
                     // @ts-expect-error please stop using the old browser Plugin types
                     plugins[plugin.id] = {
@@ -52,14 +48,11 @@ export async function restoreThemes(backup: Record<string, Theme>) {
     for (const theme of Object.values(backup)) {
         if (!themes[theme.id]) {
             // Try fetching the theme first, fall back to backup
-            // @ts-expect-error
-            // TODO: Fix this in vendetta-types, some theme functions are not marked as async when they should be
             await fetchTheme(theme.id).catch(() => {
                 try {
                     themes[theme.id] = {
                         id: theme.id,
                         selected: theme.selected,
-                        // TODO: This might break with unprocessed data
                         data: theme.data,
                     }
                 } catch(e) {

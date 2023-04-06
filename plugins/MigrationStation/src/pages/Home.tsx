@@ -2,11 +2,11 @@ import { React, ReactNative as RN, clipboard } from "@vendetta/metro/common";
 import { storage } from "@vendetta/plugin";
 import { useProxy } from "@vendetta/storage";
 import { getAssetIDByName } from "@vendetta/ui/assets";
+import { showInputAlert } from "@vendetta/ui/alerts";
 import { showToast } from "@vendetta/ui/toasts";
 import { Forms } from "@vendetta/ui/components";
 import { OptionSwitch } from "../def";
 import backup from "../lib/backup";
-import { showInputAlert } from "@vendetta/ui/alerts";
 import restore from "../lib/restore";
 
 const { FormRow, FormSwitchRow, FormSection, FormDivider } = Forms;
@@ -94,8 +94,6 @@ export default () => {
                     label="Restore"
                     leading={<FormRow.Icon source={getAssetIDByName("ic_download_24px")} />}
                     disabled={anyAvailable}
-                    // @ts-expect-error
-                    // TODO: help, types bad
                     // TODO: crap, there's a length limit on these input alerts
                     onPress={() => showInputAlert({
                         title: "Input Backup Data",
