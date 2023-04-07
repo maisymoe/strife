@@ -1,4 +1,4 @@
-import { React, ReactNative as RN, clipboard } from "@vendetta/metro/common";
+import { React, ReactNative as RN, NavigationNative } from "@vendetta/metro/common";
 import { storage } from "@vendetta/plugin";
 import { useProxy } from "@vendetta/storage";
 import { getAssetIDByName } from "@vendetta/ui/assets";
@@ -8,6 +8,8 @@ import { Forms } from "@vendetta/ui/components";
 import { OptionSwitch } from "../def";
 import backup from "../lib/backup";
 import restore from "../lib/restore";
+import { downloadFile, openFilePicker } from "../lib/files";
+import Summary from "./Summary";
 
 const { FormRow, FormSwitchRow, FormSection, FormDivider } = Forms;
 
@@ -41,6 +43,7 @@ const switches: OptionSwitch[] = [
 
 export default () => {
     const [, forceUpdate] = React.useReducer((n) => ~n, 0);
+    const navigation = NavigationNative.useNavigation();
     useProxy(storage);
 
     const anyAvailable = Object.values(storage).every(i => !i);
@@ -85,37 +88,47 @@ export default () => {
                             themes: storage.backupThemes,
                         }).catch(e => showToast("Failed to create backup", getAssetIDByName("Small")));
 
-                        // TODO: When we're writing to files, format the JSON
-                        clipboard.setString(JSON.stringify(finalBackup));
-                        showToast("Copied backup data to clipboard.", getAssetIDByName("Check"));
+                        RN.Share.share({ message: JSON.stringify(finalBackup, null, 4), title: `vd-ms-backup-${Date.now()}` });
                     }}
                 />
                 <FormRow 
                     label="Restore"
                     leading={<FormRow.Icon source={getAssetIDByName("ic_download_24px")} />}
                     disabled={anyAvailable}
-                    // TODO: crap, there's a length limit on these input alerts
-                    onPress={() => showInputAlert({
-                        title: "Input Backup Data",
-                        confirmText: "Restore",
-                        cancelText: "Cancel",
-                        onConfirm: async (input) => {
-                            await restore(JSON.parse(input), {
-                                vendetta: storage.backupVendetta,
-                                plugins: storage.backupPlugins,
-                                pluginData: storage.backupPluginData,
-                                themes: storage.backupThemes,
-                            });
+                    onPress={() => openFilePicker().then(async i => {
+                        await restore(i, {
+                            vendetta: storage.backupVendetta,
+                            plugins: storage.backupPlugins,
+                            pluginData: storage.backupPluginData,
+                            themes: storage.backupThemes,
+                        });
 
-                            showToast("Restored backup successfully.", getAssetIDByName("Check"));
-                        }
-                    })}
+                        showToast("Restored backup successfully.", getAssetIDByName("Check"));
+                    }).catch(e => showToast(e, getAssetIDByName("Small")))}
                 />
                 <FormRow 
                     label="Tools"
                     leading={<FormRow.Icon source={getAssetIDByName("ic_badge_staff")} />}
                     trailing={<FormRow.Arrow />}
                     onPress={() => showToast("TODO", getAssetIDByName("img_none"))}
+                />
+                <FormRow 
+                    label="TESTING: Show Summary Page"
+                    leading={<FormRow.Icon source={getAssetIDByName("settings")} />}
+                    trailing={<FormRow.Arrow />}
+                    onPress={() => navigation.push("VendettaCustomPage", {
+                        title: "Summary",
+                        render: () => <Summary 
+                            headerText="Backup Success"
+                            bodyText="All done!"
+                            buttons={[
+                                {
+                                    text: "Reload",
+                                    onPress: () => RN.NativeModules.BundleUpdaterManager.reload(),
+                                }
+                            ]}
+                        />,
+                    })}
                 />
             </FormSection>
         </RN.ScrollView>
