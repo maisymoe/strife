@@ -1,0 +1,14 @@
+{
+    "name": "AnonymousFileNames",
+    "description": "Randomises file names before you upload them.",
+    "authors": [
+        {
+            "name": "Beef",
+            "id": "257109471589957632"
+        }
+    ],
+    "main": "src/index.ts",
+    "vendetta": {
+        "icon": "icon-qs-files"
+    }
+}
