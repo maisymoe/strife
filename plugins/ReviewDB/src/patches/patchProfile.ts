@@ -1,19 +1,19 @@
 import { React } from "@vendetta/metro/common";
-import { find } from "@vendetta/metro";
+import { findByTypeName } from "@vendetta/metro";
 import { after } from "@vendetta/patcher";
 import { findInReactTree } from "@vendetta/utils";
 import ReviewSection from "../components/ReviewSection";
 
-const UserProfile = find(m => m.type?.name === "UserProfile");
+const UserProfile = findByTypeName("UserProfile");
 
 export default () => after("type", UserProfile, (args, ret) => {
-    const profileCardSection = findInReactTree(ret, r =>
-        r?.props?.children.find((res: any) => typeof res?.props?.displayProfile?.userId === "string") &&
+    const profileSections = findInReactTree(ret, r => 
         r?.type?.displayName === "View" &&
-        Array?.isArray(r?.props?.style)
+        // UserProfileBio still exists even when the user has no bio. Yep.
+        r?.props?.children.findIndex(i => i?.type?.name === "UserProfileBio") !== -1
     )?.props?.children;
 
-    const userId = args[0].userId;
+    const userId = args[0]?.userId;
 
-    profileCardSection?.push(React.createElement(ReviewSection, { userId }));
+    profileSections?.push(React.createElement(ReviewSection, { userId }));
 });
