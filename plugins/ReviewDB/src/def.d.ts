@@ -18,9 +18,19 @@ export interface Review {
         discordID: string;
         username: string;
         profilePhoto: string;
+        badges: Badge[];
     },
     star: number;
     comment: string;
     type: ReviewType;
     timestamp: number;
+}
+
+export interface Badge {
+    name: string;
+    description: string;
+    icon: string;
+    redirectURL: string;
+    type: number;
+    discordID: string;
 }

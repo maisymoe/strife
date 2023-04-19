@@ -3,6 +3,7 @@ import { findByProps } from "@vendetta/metro";
 import { Forms } from "@vendetta/ui/components";
 import { Review } from "../def";
 import showReviewActionSheet from "../lib/showReviewActionSheet";
+import ReviewUsername from "./ReviewUsername";
 
 interface ReviewRowProps {
     review: Review;
@@ -16,7 +17,7 @@ const styles = stylesheet.createThemedStyleSheet({
     },
 });
 
-const { FormRow, FormLabel, FormSubLabel } = Forms;
+const { FormRow, FormSubLabel } = Forms;
 const { colors, meta } = findByProps("colors", "meta");
 const { useThemeContext } = findByProps("useThemeContext");
 
@@ -29,7 +30,7 @@ export default function ReviewRow({ review }: ReviewRowProps) {
 
     return (
         <FormRow
-            label={<FormLabel text={review.sender.username} style={{ color: labelColor }} />}
+            label={<ReviewUsername username={review.sender.username} badges={review.sender.badges} />}
             subLabel={<FormSubLabel text={review.comment} style={{ color: labelColor }} />}
             leading={<RN.Image style={styles.avatar} source={{ uri: review.sender.profilePhoto }} />}
             onLongPress={() => showReviewActionSheet(review)}
