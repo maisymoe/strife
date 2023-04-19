@@ -11,7 +11,7 @@ export async function jsonFetch<T = APIResponse>(input: RequestInfo | URL, optio
     if (!req.ok) throw new Error("Request returned non-ok");
 
     const json = await req.json();
-    if (json.success === false) throw new Error(json.message);
+    if (json.success === false) throw json.message;
     
     return json;
 }
