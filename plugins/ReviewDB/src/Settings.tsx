@@ -5,7 +5,7 @@ import { getAssetIDByName } from "@vendetta/ui/assets";
 import { Forms } from "@vendetta/ui/components";
 import showAuthModal from "./lib/showAuthModal";
 
-const { FormSection, FormRow } = Forms;
+const { FormSection, FormRow, FormDivider } = Forms;
 
 export default () => {
     useProxy(storage);
@@ -19,6 +19,7 @@ export default () => {
                     trailing={FormRow.Arrow}
                     onPress={showAuthModal}
                 />
+                <FormDivider />
                 <FormRow
                     label="Log out of ReviewDB"
                     subLabel="Note that this does not remove ReviewDB from your Authorized Apps page in Discord."

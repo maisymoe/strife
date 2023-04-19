@@ -18,7 +18,7 @@ const styles = stylesheet.createThemedStyleSheet({
 
 const { FormRow, FormLabel, FormSubLabel } = Forms;
 const { colors, meta } = findByProps("colors", "meta");
-const useThemeContext = findByProps("useThemeContext").useThemeContext;
+const { useThemeContext } = findByProps("useThemeContext");
 
 // This component behaves VERY similarly to this custom one, but subLabel doesn't get themed so... here we are!
 // const UserProfileRow = findByName("UserProfileRow");

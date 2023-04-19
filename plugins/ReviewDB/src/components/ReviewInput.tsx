@@ -7,8 +7,6 @@ import { showToast } from "@vendetta/ui/toasts";
 import { getAssetIDByName } from "@vendetta/ui/assets";
 import { addReview } from "../lib/api";
 
-// TODO: Properly handle existing reviews - whilst it does work fine right now, add a visual representation
-
 interface ReviewInputProps {
     userId: string;
     shouldEdit?: boolean;
@@ -43,7 +41,7 @@ const styles = stylesheet.createThemedStyleSheet({
 });
 
 const { colors, meta } = findByProps("colors", "meta");
-const useThemeContext = findByProps("useThemeContext").useThemeContext;
+const { useThemeContext } = findByProps("useThemeContext");
 
 export default function ReviewInput({ userId, shouldEdit, refetch }: ReviewInputProps) {
     useProxy(storage);
