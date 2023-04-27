@@ -29,3 +29,10 @@ export interface OptionSwitch {
     depends?: string;
     action?: (v: boolean) => void;
 }
+
+export interface Tab {
+    id: string;
+    title: string;
+    render?: React.ComponentType;
+    onPress?: (tab?: string) => void;
+}
