@@ -28,7 +28,7 @@ const switches: OptionSwitch[] = [
         label: "Plugin Data",
         subLabel: "Whether to include the data of installed plugins",
         icon: "ic_rulebook",
-        setting: "backupPluginData",
+        setting: "includePluginData",
         depends: "includePlugins",
     },
     {
