@@ -36,3 +36,11 @@ export interface Tab {
     render?: React.ComponentType;
     onPress?: (tab?: string) => void;
 }
+
+export type LogType = "info" | "warn" | "error"
+
+export interface Log {
+    source: string;
+    message: string;
+    type: LogType;
+}
