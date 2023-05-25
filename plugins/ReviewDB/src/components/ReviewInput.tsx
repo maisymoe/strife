@@ -6,6 +6,7 @@ import { rawColors } from "@vendetta/ui";
 import { showToast } from "@vendetta/ui/toasts";
 import { getAssetIDByName } from "@vendetta/ui/assets";
 import { addReview } from "../lib/api";
+import { useThemedColor } from "../lib/utils";
 
 interface ReviewInputProps {
     userId: string;
@@ -19,7 +20,8 @@ const styles = stylesheet.createThemedStyleSheet({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        marginHorizontal: 4,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
     },
     textInput: {
         flex: 1,
@@ -28,27 +30,20 @@ const styles = stylesheet.createThemedStyleSheet({
         fontFamily: constants.Fonts.DISPLAY_MEDIUM,
     },
     sendButton: {
-        flexShrink: 0,
+        flexShrink: 1,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: rawColors.BRAND_500,
-        height: 40,
-        width: 40,
-        borderRadius: 20,
-        marginLeft: 4,
+        minHeight: 40,
+        minWidth: 40,
+        borderRadius: 999,
     },
 });
 
-const { colors, meta } = findByProps("colors", "meta");
 const { useThemeContext } = findByProps("useThemeContext");
 
 export default function ReviewInput({ userId, shouldEdit, refetch }: ReviewInputProps) {
     useProxy(storage);
-    const themeContext = useThemeContext();
-    const textColor = meta.resolveSemanticColor(themeContext.theme, colors.TEXT_NORMAL);
-    const placeholderColor = meta.resolveSemanticColor(themeContext.theme, colors.INPUT_PLACEHOLDER_TEXT);
-
     const [reviewText, setReviewText] = React.useState("");
     const disableTextArea = !storage.authToken;
     const disableButton = !storage.authToken || reviewText.length === 0;
@@ -56,15 +51,15 @@ export default function ReviewInput({ userId, shouldEdit, refetch }: ReviewInput
     return (
         <RN.View style={styles.container}>
             <RN.TextInput
-                style={{ ...styles.textInput, color: textColor }}
+                style={{ ...styles.textInput, color: useThemedColor("TEXT_NORMAL") }}
                 editable={!disableTextArea}
                 placeholder={disableTextArea ? "You must be authenticated to add a review." : `Tap to ${shouldEdit ? "edit your" : "add a"} review`}
-                placeholderTextColor={placeholderColor}
+                placeholderTextColor={useThemedColor("INPUT_PLACEHOLDER_TEXT")}
                 value={reviewText}
                 onChangeText={(i: string) => setReviewText(i)}
             />
             <RN.Pressable
-                style={{ ...styles.sendButton, opacity: disableButton ? 0.25 : 1 }}
+                style={{ ...styles.sendButton, backgroundColor: useThemeContext().primaryColor ?? rawColors.BRAND_500, opacity: disableButton ? 0.25 : 1 }}
                 disabled={disableButton}
                 onPress={() => {
                     addReview(userId, reviewText).then((res) => {

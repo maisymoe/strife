@@ -1,7 +1,7 @@
 import { ReactNative as RN, stylesheet } from "@vendetta/metro/common";
-import { findByProps } from "@vendetta/metro";
 import { Forms } from "@vendetta/ui/components";
 import { Badge } from "../def";
+import { useThemedColor } from "../lib/utils";
 import ReviewBadge from "./ReviewBadge";
 
 interface ReviewUsernameProps {
@@ -17,17 +17,10 @@ const styles = stylesheet.createThemedStyleSheet({
 })
 
 const { FormLabel } = Forms;
-const { colors, meta } = findByProps("colors", "meta");
-const { useThemeContext } = findByProps("useThemeContext");
 
-export default function ReviewUsername({ username, badges }: ReviewUsernameProps) {
-    const themeContext = useThemeContext();
-    const labelColor = meta.resolveSemanticColor(themeContext.theme, colors.TEXT_NORMAL);
-
-    return (
-        <RN.View style={styles.row}>
-            <FormLabel text={username} style={{ color: labelColor }} />
-            <RN.View style={styles.row}>{badges.map(b => <ReviewBadge badge={b} />)}</RN.View>
-        </RN.View>
-    )
-}
+export default ({ username, badges }: ReviewUsernameProps) => (
+    <RN.View style={styles.row}>
+        <FormLabel text={username} style={{ color: useThemedColor("TEXT_NORMAL") }} />
+        <RN.View style={styles.row}>{badges.map(b => <ReviewBadge badge={b} />)}</RN.View>
+    </RN.View>
+)
