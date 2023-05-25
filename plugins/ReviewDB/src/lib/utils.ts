@@ -7,7 +7,13 @@ const { getCurrentUser } = findByStoreName("UserStore");
 export const canDeleteReview = (review: Review) => review.sender.discordID === getCurrentUser()?.id || admins.includes(getCurrentUser()?.id);
 
 export async function jsonFetch<T = APIResponse>(input: RequestInfo | URL, options?: RequestInit): Promise<T> {
-    const req = await fetch(input, options);
+    const req = await fetch(input, {
+        headers: {
+            "content-type": "application/json",
+            accept: "application/json",
+        },
+        ...options,
+    });
 
     const json = await req.json();
     if (json.success === false) throw new Error(json.message);
