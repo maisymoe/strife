@@ -71,7 +71,7 @@ export default function ReviewInput({ userId, shouldEdit, refetch }: ReviewInput
                         setReviewText("");
                         refetch();
                         showToast(res.message, getAssetIDByName("Check"));
-                    }).catch((err) => showToast(err, getAssetIDByName("Small")));
+                    }).catch((err: Error) => showToast(err.message, getAssetIDByName("Small")));
                 }}
             >
                 <RN.Image style={{ tintColor: "#fff" }} source={getAssetIDByName("ic_send")} />
