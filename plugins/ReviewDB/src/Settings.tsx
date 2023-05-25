@@ -5,7 +5,7 @@ import { getAssetIDByName } from "@vendetta/ui/assets";
 import { Forms } from "@vendetta/ui/components";
 import showAuthModal from "./lib/showAuthModal";
 
-const { FormSection, FormRow, FormDivider } = Forms;
+const { FormSection, FormRow, FormSwitchRow, FormDivider } = Forms;
 
 export default () => {
     useProxy(storage);
@@ -26,6 +26,15 @@ export default () => {
                     leading={<FormRow.Icon source={getAssetIDByName("ic_logout_24px")} />}
                     disabled={storage.authToken.length === 0}
                     onPress={() => storage.authToken = ""}
+                />
+            </FormSection>
+            <FormSection title="Settings">
+                <FormSwitchRow
+                    label="Use profile-themed send button"
+                    subLabel="Controls whether the review send button should attempt to match the user's profile colors."
+                    leading={<FormRow.Icon source={getAssetIDByName("ic_paint_brush")} />}
+                    value={storage.useThemedSend}
+                    onValueChange={(v: boolean) => storage.useThemedSend = v}
                 />
             </FormSection>
         </RN.ScrollView>

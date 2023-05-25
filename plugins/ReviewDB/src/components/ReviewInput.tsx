@@ -59,7 +59,7 @@ export default function ReviewInput({ userId, shouldEdit, refetch }: ReviewInput
                 onChangeText={(i: string) => setReviewText(i)}
             />
             <RN.Pressable
-                style={{ ...styles.sendButton, backgroundColor: useThemeContext().primaryColor ?? rawColors.BRAND_500, opacity: disableButton ? 0.25 : 1 }}
+                style={{ ...styles.sendButton, backgroundColor: (storage.useThemedSend && useThemeContext().primaryColor) || rawColors.BRAND_500, opacity: disableButton ? 0.25 : 1 }}
                 disabled={disableButton}
                 onPress={() => {
                     addReview(userId, reviewText).then((res) => {

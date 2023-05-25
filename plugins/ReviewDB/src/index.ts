@@ -4,8 +4,8 @@ import patchProfile from "./patches/patchProfile";
 import exposeAPI from "./patches/exposeAPI";
 
 // Default settings
-// TODO: Do I need to do this?
 storage.authToken ??= "";
+storage.useThemedSend ??= true;
 
 const patches = [
     exposeAPI(),
