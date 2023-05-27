@@ -23,7 +23,7 @@ export function enable() {
             user,
         }));
     } catch(e) {
-        logger.error(`Experiments: Failed to enable experiments...`, e);
+        logger.error(`Failed to enable experiments...`, e);
     }
 }
 
