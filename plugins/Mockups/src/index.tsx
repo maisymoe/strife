@@ -6,6 +6,7 @@ import { Page } from "./def";
 import TabulatedScreen from "./shared/TabulatedScreen";
 import Icons from "./pages/themes/Icons";
 import Fonts from "./pages/themes/Fonts";
+import TableRowGeneral from "./pages/tablerow-general";
 
 const { FormRow, FormDivider } = Forms;
 const getScreens = findByName("getScreens");
@@ -32,6 +33,11 @@ const pages: Page[] = [
                 render: Fonts,
             },
         ]} />
+    },
+    {
+        label: "the tabs ui-ening",
+        icon: "ic_reaction_burst",
+        render: TableRowGeneral,
     }
 ]
 
