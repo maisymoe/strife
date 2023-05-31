@@ -1,7 +1,13 @@
+import { storage } from "@vendetta/plugin";
 import disableBugReporter from "./patches/patchBugReporter";
+import patchAddFiles from "./patches/patchAddFiles";
+
+// Default settings
+storage.fixJSONUploads ??= true;
 
 const patches = [
     disableBugReporter(),
+    patchAddFiles(),
 ];
 
 export const onUnload = () => patches.forEach(p => p());

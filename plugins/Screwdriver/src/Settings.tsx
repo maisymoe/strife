@@ -22,6 +22,17 @@ const categories: Category[] = [
         ]
     },
     {
+        title: "Fixes",
+        items: [
+            {
+                label: "JSON file uploads",
+                subLabel: "Fix a long-standing Discord bug causing JSON files to be uploaded with their metadata as contents.",
+                icon: "ic_file_upload_24px",
+                setting: "fixJSONUploads",
+            }
+        ]
+    },
+    {
         title: "Forbidden Fruit",
         disclaimer: "These features grant certain Nitro perks without Nitro, take caution when using them.",
         items: [
