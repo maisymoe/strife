@@ -5,7 +5,7 @@ import { General, Forms } from "@vendetta/ui/components";
 export const Constants = common.constants;
 export const Clipboard = common.clipboard;
 export const Assets = findByProps("registerAsset");
-export const Messages = findByProps("recieveMessage", "sendMessage");
+export const Messages = findByProps("receiveMessage", "sendMessage");
 export const Clyde = findByProps("createBotMessage");
 export const Avatars = findByProps("BOT_AVATARS");
 export const Native = common.ReactNative.NativeModules;
