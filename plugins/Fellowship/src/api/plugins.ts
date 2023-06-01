@@ -76,7 +76,7 @@ export const getPlugins = () => mergePlugins();
 export const getEnabledPlugins = () => mergePlugins(([, meta]) => meta.enabled);
 export const getDisabledPlugins = () => mergePlugins(([, meta]) => !meta.enabled);
 
-const buildRegisterPluginProxy = (url: string) => new Proxy((window as any).enmity.plugins, {
+const buildRegisterPluginProxy = (url: string) => new Proxy(globalThis.enmity.plugins, {
     get(target, prop) {
         if (prop !== "registerPlugin") return Reflect.get(target, prop);
 
@@ -96,13 +96,13 @@ const buildRegisterPluginProxy = (url: string) => new Proxy((window as any).enmi
 export async function evalPlugin(url: string, enable: boolean = false): Promise<string> {
     const pluginScript = plugins[url]?.script ?? (await (await fetch(url)).text());
     const enmityProxy = {
-        ...(window as any).enmity,
+        ...globalThis.enmity,
         plugins: buildRegisterPluginProxy(url),
     };
 
-    const windowProxy = new Proxy(window as any, {
+    const windowProxy = new Proxy(window, {
         get(target, prop) {
-            if (prop == "window") return windowProxy;
+            if (prop === "window") return windowProxy;
 
             switch (prop) {
                 case "vendetta":
