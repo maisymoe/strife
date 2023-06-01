@@ -3,6 +3,7 @@ import type { EntityAuthor } from "enmity/common";
 import { storage } from "@vendetta/plugin";
 import { without } from "@vendetta/utils";
 import { stub } from "../utils";
+import { registerCommands, unregisterCommands } from "./commands";
 
 // TODO: Work on plugin loader is paused until I've polyfilled the rest of the API
 
@@ -39,8 +40,24 @@ export function registerPlugin(plugin: EnmityPlugin) {
     registeredPlugins[url] = {
         onStart: plugin.onStart,
         onStop: plugin.onStop,
-        onEnable: plugin.onEnable,
-        onDisable: plugin.onDisable,
+        onEnable: () => {
+            try {
+                plugin.onStart();
+                if (plugin.commands) registerCommands(plugin.name, plugin.commands);
+            } catch(e) {
+                console.error(`${plugin.name} errored while enabling`, e.message);
+            }
+        },
+        onDisable: () => {
+            try {
+                // i am convinced this is supposed to be plugin.patchers, so i'll treat it that way
+                if (plugin.patches) plugin.patches.forEach(patcher => patcher.unpatchAll());
+                if (plugin.commands) unregisterCommands(plugin.name);
+                plugin.onStop();
+            } catch(e) {
+                console.error(`${plugin.name} errored while disabling`, e.message);
+            }
+        },
     };
 }
 

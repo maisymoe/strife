@@ -4,6 +4,7 @@ import * as metro from "../api/metro";
 import * as common from "../api/metro/common";
 import * as patcher from "../api/patcher";
 import * as plugins from "../api/plugins";
+import * as commands from "../api/commands";
 import * as utilities from "../api/utilities";
 import * as native from "../api/native";
 import * as assets from "../api/assets";
@@ -14,6 +15,7 @@ export default () => {
         patcher,
         version: `Fellowship ${plugin.manifest.hash.slice(7)}`,
         plugins,
+        commands,
         utilities,
         components: new Proxy({}, { get: (_, prop) => General[prop] ?? Forms[prop] }),
         native,
