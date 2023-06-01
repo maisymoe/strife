@@ -40,7 +40,6 @@ const categories: Category[] = [
                 label: "Enable Client Themes",
                 subLabel: "Forcibly enable Discord's themes, regardless of if you have Nitro.",
                 icon: "ic_theme_24px",
-                disabled: true,
                 setting: "enableClientThemes",
             }
         ]
