@@ -1,1 +1,1 @@
-{"name":"NoTrack","description":"Disable Discord's tracking.","authors":[{"name":"Beef","id":"257109471589957632"}],"main":"index.js","vendetta":{"icon":"ic_noise_cancellation_disabled"},"hash":"50bc0b7c4cda2f532a6282cc98825a654e0eb6de93b28537258b9577293bdb09"}
+{"name":"NoTrack","description":"Disable Discord's tracking.","authors":[{"name":"maisy","id":"257109471589957632"}],"main":"index.js","vendetta":{"icon":"ic_noise_cancellation_disabled"},"hash":"9e590afa317064073b157d932b9595d1b7bb4cf3978dd44dec8d282b1330ef36"}

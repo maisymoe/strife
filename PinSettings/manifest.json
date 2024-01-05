@@ -1,1 +1,1 @@
-{"name":"PinSettings","description":"Allows pinning plugin settings to User Settings.","authors":[{"name":"Beef","id":"257109471589957632"}],"main":"index.js","vendetta":{"icon":"ic_pins"},"hash":"36e40114a063d5994c042ef157b39418e892abb2cc1c53a59c9fd07488dacd14"}
+{"name":"PinSettings","description":"Allows pinning plugin settings to User Settings.","authors":[{"name":"maisy","id":"257109471589957632"}],"main":"index.js","vendetta":{"icon":"ic_pins"},"hash":"36e40114a063d5994c042ef157b39418e892abb2cc1c53a59c9fd07488dacd14"}
