@@ -7,7 +7,8 @@ const patches = [
     network(),
     console(),
     miscellanous(),
-    sentry(),
+    // TODO: This patch is supposedly causing crashing and I do not know why
+    // sentry(),
 ];
 
 export function onUnload() {
