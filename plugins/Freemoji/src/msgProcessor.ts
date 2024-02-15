@@ -23,7 +23,7 @@ function extractUnusableEmojis(messageString: string, size: number) {
 			// Remove emote from original msg
 			messageString = messageString.replace(emojiString[0], "");
 			// Add to emotes to send
-			emojiUrls.push(`${emoji.url.split("?")[0]}?size=${size}`);
+			emojiUrls.push(`${emoji.url.split("?")[0]}?size=${size}&name=${emoji.name}`);
 		}
 	}
 
